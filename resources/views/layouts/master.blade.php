@@ -17,7 +17,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
 </head>
-<body>
+<body style="background-color: #bad1f5;">
 
     <div class="container mt-3">
         @yield('content')
