@@ -12,13 +12,10 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-
 </head>
 <body style="background-color: #bad1f5;">
-
     <div class="container mt-3">
         @yield('content')
     </div>
