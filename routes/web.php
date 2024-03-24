@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('layouts.app');
+    return view('dashboard.home');
 });
 
 Route::get('/login', function () {
