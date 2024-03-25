@@ -11,29 +11,32 @@
             <div class="image">
                 <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
+            @if(Auth::check())
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
             </div>
+            @endif
         </div>
+
 
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         Dashboard
                     </a>
                 </li>
                 <li class="nav-header">Menu</li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('assets') }}" class="nav-link">
                         <i class="nav-icon fas fa-file"></i>
                         Assets
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('users') }}" class="nav-link">
                         <i class="nav-icon fas fa-users"></i>
                         Users
                     </a>

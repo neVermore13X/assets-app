@@ -17,4 +17,23 @@
         </div>
     </div>
 </div>
+
+<section class="content">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Asset Item</h4>
+            <div class="ml-auto">
+                <a href="#" class="btn btn-success"><i class="fas fa-plus"></i> Add Item</a>
+            </div>
+        </div>
+        <div class="card-body">
+            Start creating your amazing application!
+        </div>
+        <div class="card-footer">
+            Footer
+        </div>
+    </div>
+</section>
+
+
 @stop
