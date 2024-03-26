@@ -30,17 +30,19 @@
                 </li>
                 <li class="nav-header">Menu</li>
                 <li class="nav-item">
-                    <a href="{{ route('assets') }}" class="nav-link">
+                    <a href="{{ route('assets.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-file"></i>
                         Assets
                     </a>
                 </li>
+                @if (Auth::user()->admin)
                 <li class="nav-item">
                     <a href="{{ route('users') }}" class="nav-link">
                         <i class="nav-icon fas fa-users"></i>
                         Users
                     </a>
                 </li>
+                @endif
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-chart-pie"></i>

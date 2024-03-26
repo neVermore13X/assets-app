@@ -27,7 +27,38 @@
             </div>
         </div>
         <div class="card-body">
-            Start creating your amazing application!
+            <div class="table-responsive">
+                <table class="table table-bordered ">
+                    <thead>
+                        <tr>
+                            <td>Kode Asset</td>
+                            <td>Nama Barang</td>
+                            <td>Harga</td>
+                            <td>Lokasi</td>
+                            <td>Pemakai</td>
+                            <td>Status</td>
+                            <td>Gambar</td>
+                            <td>Dibuat</td>
+                            <td>Update Terakhir</td>
+                            <td>Aksi</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="card-footer">
             Footer
