@@ -23,7 +23,7 @@
         <div class="card-header d-flex justify-content-between align-items-center">
             <h4 class="card-title mb-0">Asset Item</h4>
             <div class="ml-auto">
-                <a href="#" class="btn btn-success"><i class="fas fa-plus"></i> Add Item</a>
+                <a href="{{ route('assets.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Add Item</a>
             </div>
         </div>
         <div class="card-body">
@@ -44,19 +44,36 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse ( $assets as $asset )
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ $asset->code }}</td>
+                            <td>{{ $asset->name }}</td>
+                            <td>{{ $asset->price }}</td>
+                            <td>{{ $asset->location }}</td>
+                            <td>{{ $asset->user }}</td>
+                            <td>{{ $asset->status }}</td>
+                            <td class="text-center">
+                                <img src="{{ asset('storage/asset/' . $asset->image) }}" alt="Asset Image" class="rounded" style="width: 150px">
+                            </td>
+                            <td>{{ $asset->created_at }}</td>
+                            <td>{{ $asset->updated_at }}</td>
+                            <td>
+                                <form action="{{ route('assets.destroy', $asset->id) }}" method="POST">
+                                    <a href="{{ route('assets.show', $asset->id) }}" class="btn btn-sm btn-dark">SHOW</a>
+                                    <a href="{{ route('assets.edit', $asset->id) }}" class="btn btn-sm btn-success">EDIT</a>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
+                                </form>
+                            </td>
                         </tr>
+                        @empty
+                        <div class="alert alert-danger">
+                            Data Asset belum Tersedia.
+                        </div>
+                        @endforelse
                     </tbody>
+                    {{ $assets->links() }}
                 </table>
             </div>
         </div>

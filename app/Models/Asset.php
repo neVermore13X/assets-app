@@ -8,4 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Asset extends Model
 {
     use HasFactory;
+
+    /**
+     * fillable
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'image',
+        'code',
+        'name',
+        'price',
+        'location',
+        'user',
+        'status',
+    ];
 }
