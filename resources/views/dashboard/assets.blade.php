@@ -28,7 +28,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered ">
+                <table class="table table-bordered" id="dataTables">
                     <thead>
                         <tr>
                             <td>Kode Asset</td>
@@ -58,9 +58,10 @@
                             <td>{{ $asset->created_at }}</td>
                             <td>{{ $asset->updated_at }}</td>
                             <td>
-                                <form action="{{ route('assets.destroy', $asset->id) }}" method="POST">
-                                    <a href="{{ route('assets.show', $asset->id) }}" class="btn btn-sm btn-dark">SHOW</a>
-                                    <a href="{{ route('assets.edit', $asset->id) }}" class="btn btn-sm btn-success">EDIT</a>
+
+                                <a href="{{ route('assets.show', $asset->id) }}" class="btn btn-sm btn-dark">SHOW</a>
+                                <a href="{{ route('assets.edit', $asset->id) }}" class="btn btn-sm btn-success">EDIT</a>
+                                <form action="{{ route('assets.destroy', $asset->id) }}" method="POST" id="hapusForm">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
@@ -73,15 +74,60 @@
                         </div>
                         @endforelse
                     </tbody>
-                    {{ $assets->links() }}
                 </table>
+                <div>
+                    {{ $assets->links('pagination::bootstrap-5') }}
+                </div>
             </div>
         </div>
-        <div class="card-footer">
-            Footer
-        </div>
+    </div>
+    <div class="card-footer">
+        Footer
+    </div>
     </div>
 </section>
 
-
 @stop
+
+@if(Session::has('success'))
+<script>
+    toastr.success("{{ Session::get('success') }}")
+
+</script>
+@endif
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('hapusForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Menghentikan pengiriman formulir secara default
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?'
+                , text: "Data akan dihapus secara permanen!"
+                , icon: 'warning'
+                , showCancelButton: true
+                , confirmButtonColor: '#d33'
+                , cancelButtonColor: '#3085d6'
+                , confirmButtonText: 'Ya, hapus!'
+                , cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika pengguna mengonfirmasi, formulir akan dikirim
+                    event.target.submit(); // Mengirim formulir
+                }
+            });
+        });
+    });
+
+</script>
+
+<script>
+    new DataTable('#dataTables', {
+        layout: {
+            topStart: {
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+            }
+        }
+    });
+
+</script>

@@ -9,6 +9,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 
+
 class AssetController extends Controller
 {
     /**
@@ -19,18 +20,7 @@ class AssetController extends Controller
     public function index(): View
     {
         //get data asset
-        $assets = Asset::latest()->paginate(5);
-
-        $title = 'Delete Data!';
-        $text = "Apakah kamu ingin Delete data ini ?";
-        confirmDelete($title, $text);
-
-        // Check for success message
-        if (session()->has('success')) {
-            Alert::success('Tambah Data Berhasil!', session('success'));
-        } elseif (session()->has('error')) {
-            Alert::error('Error!', session('error'));
-        }
+        $assets = Asset::latest()->paginate(3);
 
         //render view with posts
         return view('dashboard.assets', compact('assets'));
@@ -96,12 +86,88 @@ class AssetController extends Controller
         $asset = Asset::findOrFail($id);
 
         //delete image
-        Storage::delete('public/posts/' . $asset->image);
+        Storage::delete('public/asset/' . $asset->image);
 
         //delete post
         $asset->delete();
 
         //redirect to index
-        return redirect()->route('dashboard.assets')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('assets.index')->with(['success' => 'Data Berhasil Dihapus!']);
+    }
+
+    public function show(string $id): View
+    {
+        //get post by ID
+        $asset = Asset::findOrFail($id);
+
+        //render view with post
+        return view('dashboard.showasset', compact('asset'));
+    }
+
+    public function edit(string $id): View
+    {
+        //get post by ID
+        $asset = Asset::findOrFail($id);
+
+        //render view with post
+        return view('dashboard.editasset', compact('asset'));
+    }
+
+    /**
+     * update
+     *
+     * @param  mixed $request
+     * @param  mixed $id
+     * @return RedirectResponse
+     */
+    public function update(Request $request, $id): RedirectResponse
+    {
+        //form validasi
+        $this->validate($request, [
+            'kode_asset' => 'required',
+            'nama_asset' => 'required',
+            'harga_asset' => 'required',
+            'lokasi_asset' => 'required',
+            'status_asset' => 'required',
+        ]);
+
+        //get post by ID
+        $asset = Asset::findOrFail($id);
+
+        //check if image is uploaded
+        if ($request->hasFile('image')) {
+
+            //upload new image
+            $image = $request->file('image');
+            $image->storeAs('public/asset', $image->hashName());
+
+            //delete old image
+            Storage::delete('public/asset/' . $asset->image);
+
+            //update post with new image
+            $asset->update([
+                'image'     => $image->hashName(),
+                'code'     => $request->kode_asset,
+                'name'   => $request->nama_asset,
+                'price'   => $request->harga_asset,
+                'location'   => $request->lokasi_asset,
+                'user'   => $request->user_asset,
+                'status'   => $request->status_asset
+            ]);
+        } else {
+
+            //update post without image
+            $asset->update([
+                'code'     => $request->kode_asset,
+                'name'   => $request->nama_asset,
+                'price'   => $request->harga_asset,
+                'location'   => $request->lokasi_asset,
+                'user'   => $request->user_asset,
+                'status'   => $request->status_asset
+            ]);
+        }
+
+        //redirect to index
+        return redirect()->route('assets.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
 }
